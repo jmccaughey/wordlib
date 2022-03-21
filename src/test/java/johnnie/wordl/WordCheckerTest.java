@@ -9,6 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class WordCheckerTest {
 
+    // words file from https://github.com/charlesreid1/five-letter-words/blob/master/sgb-words.txt
     private WordSource wordSource = new LocalWordSource("/Users/jmccaughey/Downloads/words.txt");
     private WordChecker wordChecker = new WordChecker();
 
@@ -107,6 +108,38 @@ class WordCheckerTest {
         assertEquals("allow", possible.get(0));
     }
 
+    @Test
+    void testList3() {
+        WordleState wordleState = new WordleState();
+        wordleState.addNotPresent('f');
+        wordleState.addNotPresent('l');
+        wordleState.addNotPresent('s');
+        wordleState.addNotPresent('h');
+        wordleState.addNotAt('e', 2);
+        List<String> words = wordSource.getWords();
+        List<String> possible = getPossible(wordleState, words);
+        assertFalse(possible.isEmpty());
+
+        assertTrue(possible.size() == 831);
+
+        wordleState.addNotPresent('m');
+        wordleState.addNotPresent('o');
+        wordleState.addNotPresent('y');
+        wordleState.addAt('n', 2);
+        wordleState.addAt('e', 3);
+        possible = getPossible(wordleState, words);
+        assertFalse(possible.isEmpty());
+
+        assertTrue(possible.size() == 19);
+
+        wordleState.addAt('r', 0);
+        wordleState.addAt('e', 1);
+        wordleState.addAt('w', 4);
+        possible = getPossible(wordleState, words);
+        assertFalse(possible.isEmpty());
+        assertEquals("renew", possible.get(0));
+    }
+
     private List<String> getPossible(WordleState wordleState, List<String> words) {
         List<String> possible;
         possible = new ArrayList<>();
@@ -117,6 +150,5 @@ class WordCheckerTest {
         }
         return possible;
     }
-
 
 }
