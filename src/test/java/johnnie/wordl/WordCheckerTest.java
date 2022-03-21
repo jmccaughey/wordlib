@@ -106,7 +106,7 @@ class WordCheckerTest {
         possible = getPossible(wordleState, words);
         assertEquals("allow", possible.get(0));
     }
-    
+
     private List<String> getPossible(WordleState wordleState, List<String> words) {
         List<String> possible;
         possible = new ArrayList<>();
