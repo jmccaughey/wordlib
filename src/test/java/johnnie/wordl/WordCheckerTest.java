@@ -140,6 +140,40 @@ class WordCheckerTest {
         assertEquals("renew", possible.get(0));
     }
 
+    @Test
+    void testList4() {
+        WordleState wordleState = new WordleState();
+        wordleState.addNotPresent('f');
+        wordleState.addNotPresent('l');
+        wordleState.addNotPresent('w');
+        wordleState.addNotPresent('s');
+        wordleState.addAt('o', 2);
+        List<String> words = wordSource.getWords();
+        List<String> possible = getPossible(wordleState, words);
+        assertFalse(possible.isEmpty());
+
+        assertTrue(possible.size() == 138);
+
+        wordleState.addNotPresent('q');
+        wordleState.addNotPresent('u');
+        wordleState.addNotPresent('t');
+        wordleState.addNotAt('e', 4);
+        //wordleState.addAt('n', 2);
+        //wordleState.addAt('e', 3);
+        possible = getPossible(wordleState, words);
+        assertFalse(possible.isEmpty());
+
+        assertTrue(possible.size() == 13);
+
+        wordleState.addAt('e', 0);
+        wordleState.addAt('p', 1);
+        wordleState.addNotPresent('c');
+        wordleState.addNotPresent('h');
+        possible = getPossible(wordleState, words);
+        assertFalse(possible.isEmpty());
+        assertEquals("epoxy", possible.get(0));
+    }
+
     private List<String> getPossible(WordleState wordleState, List<String> words) {
         List<String> possible;
         possible = new ArrayList<>();
