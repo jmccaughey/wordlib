@@ -3,6 +3,7 @@ package johnnie.wordl;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -21,7 +22,8 @@ public class LocalWordSource implements WordSource {
         if (words == null) {
             words = new ArrayList<>();
             try {
-                BufferedReader br = new BufferedReader(new FileReader(this.path));
+                BufferedReader br = new BufferedReader(new InputStreamReader(
+                        getClass().getClassLoader().getResourceAsStream(this.path)));
                 while (true) {
                     String word = br.readLine();
                     if (word != null) {
@@ -31,7 +33,8 @@ public class LocalWordSource implements WordSource {
                     }
                 }
             } catch (IOException e) {
-                e.printStackTrace();
+                //e.printStackTrace();
+                throw new RuntimeException(e);
             }
         }
         return Collections.unmodifiableList(words);
